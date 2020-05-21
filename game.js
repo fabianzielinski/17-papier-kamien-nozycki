@@ -40,11 +40,23 @@ function publishResult(player, ai, result) {
 
     if(result === 'win'){
         document.querySelector('p.wins span').textContent = ++ gameSumary.wins;
+        document.querySelector('[data-summary="who-win"]').textContent = 'Wygrałeś !!!!!!!!';
+        document.querySelector('[data-summary="who-win"]').style.color = 'green';
     } else if(result === 'loss') {
         document.querySelector('p.losses span').textContent = ++ gameSumary.losses;
+        document.querySelector('[data-summary="who-win"]').textContent = 'Przegrałeś :(';
+        document.querySelector('[data-summary="who-win"]').style.color = 'red';
     } else {
         document.querySelector('p.draws span').textContent = ++ gameSumary.draws;
+        document.querySelector('[data-summary="who-win"]').textContent = 'Remis';
+        document.querySelector('[data-summary="who-win"]').style.color = 'black';
     }
+}
+
+function endGame() {
+    document.querySelector(`[data-option = '${game.playerHand}']`).style.boxShadow = '';
+    game.playerHand = '';
+    game.aiHand = '';
 }
 
 // funkcja sterująca
@@ -58,6 +70,8 @@ function startGame() {
     console.log(gameResult);
     
     publishResult(game.playerHand, game.aiHand, gameResult);
+
+    endGame();
 }
 
 hands.forEach(hand => hand.addEventListener('click', handSelection));
